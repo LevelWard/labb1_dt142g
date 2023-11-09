@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
                 TextView precipitation = findViewById(R.id.Precipitation);
                 ImageView currentWeather= findViewById(R.id.current_weather);
 
-<<<<<<< HEAD
                 //Temp for getting wind direction where N = North, E = East, S = South, W = West
 
                 //Needs to get value from parser
