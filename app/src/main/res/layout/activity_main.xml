@@ -19,7 +19,7 @@
         android:id="@+id/refresh"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="#B8B4B4"
         android:text="@string/refresh"
         android:textColor="#000000"
