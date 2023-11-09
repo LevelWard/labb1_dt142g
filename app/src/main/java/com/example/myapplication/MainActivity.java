@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
                 TextView windspeed = findViewById(R.id.WindSpeed);
                 TextView cloudiness = findViewById(R.id.Cloudiness);
                 TextView precipitation = findViewById(R.id.Precipitation);
+                ImageView currentWeather= findViewById(R.id.current_weather);
 
+<<<<<<< HEAD
                 //Temp for getting wind direction where N = North, E = East, S = South, W = West
 
                 //Needs to get value from parser
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 precipitation.setText("Precipitation: Between " + precipitationMinValue +
                         " and " + precipitationMaxValue);
 
+                currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
             }
         });
     }
