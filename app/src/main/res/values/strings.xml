@@ -3,4 +3,8 @@
     <string name="refresh">refresh</string>
     <string name="weather_app">Weather App</string>
     <string name="current_weather">Current weather</string>
+    <string name="windspeed">WindSpeed</string>
+    <string name="cloudiness">Cloudiness</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="temperature">Temperature</string>
 </resources>

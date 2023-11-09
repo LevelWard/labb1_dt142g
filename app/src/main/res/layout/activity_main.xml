@@ -4,7 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/WindSpeed"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/windspeed"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/Cloudiness"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather" />
+
+    <TextView
+        android:id="@+id/Cloudiness"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/cloudiness"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather" />
+
+    <TextView
+        android:id="@+id/Precipitation"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/precipitation"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WindSpeed" />
 
     <TextView
         android:id="@+id/textView"
@@ -12,6 +52,7 @@
         android:layout_height="100dp"
         android:text="@string/weather_app"
         android:textAlignment="center"
+        android:textColor="#C1BEBE"
         android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,11 +78,24 @@
         android:id="@+id/current_weather"
         android:layout_width="174dp"
         android:layout_height="142dp"
+        android:contentDescription="@string/current_weather"
         app:layout_constraintBottom_toTopOf="@+id/refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/ic_launcher_background"
-        android:contentDescription="@string/current_weather" />
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/Temperature"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/temperature"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/WindSpeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
