@@ -24,10 +24,38 @@ public class MainActivity extends AppCompatActivity {
                 TextView cloudiness = findViewById(R.id.Cloudiness);
                 TextView precipitation = findViewById(R.id.Precipitation);
 
-                temperature.setText("Temperature: " + "Variabel");
-                windspeed.setText("WindSpeed: " + "Variabel");
-                cloudiness.setText("Cloudiness: " + "Variabel");
-                precipitation.setText("Precipitation: Between " + "Variable 1" + " and " + "Variabel 2");
+                //Temp for getting wind direction where N = North, E = East, S = South, W = West
+
+                //Needs to get value from parser
+                float windDirection = 0, temperatureValue = 0, windspeedValue = 0,
+                        cloudinessValue = 0, precipitationMinValue = 0, precipitationMaxValue = 0;
+                String direction = "";
+
+                if (windDirection > 330 || windDirection < 30){
+                    direction = "N";
+                }
+                else if(windDirection > 30 && windDirection < 60){
+                    direction = "NE";
+                } else if(windDirection > 60 && windDirection < 120) {
+                    direction = "E";
+                } else if (windDirection > 120 && windDirection < 150) {
+                    direction = "SE";
+                } else if (windDirection > 150 && windDirection < 210) {
+                    direction = "S";
+                } else if (windDirection > 210 && windDirection < 240) {
+                    direction = "SW";
+                } else if (windDirection > 240 && windDirection < 300) {
+                    direction = "W";
+                } else if (windDirection > 300 && windDirection < 330) {
+                    direction = "NW";
+                }
+
+
+                temperature.setText("Temperature: " + temperatureValue);
+                windspeed.setText("WindSpeed: " + windspeedValue);
+                cloudiness.setText("Cloudiness: " + cloudinessValue);
+                precipitation.setText("Precipitation: Between " + precipitationMinValue +
+                        " and " + precipitationMaxValue);
 
             }
         });
