@@ -4,15 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/WindSpeed"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/windspeed"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/Cloudiness"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather" />
+
+    <TextView
+        android:id="@+id/Cloudiness"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/cloudiness"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather" />
+
+    <TextView
+        android:id="@+id/Precipitation"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/precipitation"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WindSpeed" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:text="@string/weather_app"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/refresh"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:background="#B8B4B4"
+        android:text="@string/refresh"
+        android:textColor="#000000"
+        app:iconTint="#D1CECE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/current_weather"
+        android:layout_width="174dp"
+        android:layout_height="142dp"
+        android:contentDescription="@string/current_weather"
+        app:layout_constraintBottom_toTopOf="@+id/refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/Temperature"
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:text="@string/temperature"
+        android:textAlignment="center"
+        android:textColor="#C1BEBE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/WindSpeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
