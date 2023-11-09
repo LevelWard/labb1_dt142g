@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 cloudiness.setText("Cloudiness: " + cloudinessValue);
                 precipitation.setText("Precipitation: Between " + precipitationMinValue +
                         " and " + precipitationMaxValue);
-
                 currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
             }
         });
