@@ -7,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private double lat = 60.10;
-    private double lon = 9.58;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,23 +14,20 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadWeatherData();
+                findViewById(R.id.refresh).setVisibility(View.VISIBLE);
+
+                TextView tempLabel= findViewById(R.id.Temperature);
+                tempLabel.setText("Temperature" + " varibel 1");
+                TextView windSpeed = findViewById(R.id.WindSpeed);
+                windSpeed.setText("Windspeed" + " variabel 2");
+
+                TextView cloudiness = findViewById(R.id.Cloudiness);
+                cloudiness.setText("cloudiness" + " varibale 1");
+                TextView precipitation = findViewById(R.id.Precipitation);
+                precipitation.setText("Precipitation" + " hej");
             }
         });
     }
 
-    public void loadWeatherData(){
-        findViewById(R.id.refresh).setVisibility(View.VISIBLE);
 
-        TextView tempLabel= findViewById(R.id.Temperature);
-
-        TextView windSpeed = findViewById(R.id.WindSpeed);
-
-        TextView cloudiness = findViewById(R.id.Cloudiness);
-
-        TextView precipi = findViewById(R.id.Precipitation);
-
-        ImageView Icon = findViewById(R.id.current_weather);
-
-    }
 }
