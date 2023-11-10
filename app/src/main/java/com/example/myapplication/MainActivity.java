@@ -29,17 +29,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
                 TextView temperature = findViewById(R.id.Temperature);
                 TextView windspeed = findViewById(R.id.WindSpeed);
                 TextView cloudiness = findViewById(R.id.Cloudiness);
                 TextView precipitation = findViewById(R.id.Precipitation);
-                ImageView currentWeather= findViewById(R.id.current_weather);
+                ImageView currentWeather = findViewById(R.id.current_weather);
 
 
-
-                //TODO: Make this into a standalone object with dedicated class members & methods.
+                //TODO: Make parser into a standalone object with dedicated class members & methods.
+                String wind_direction;
+                String air_temp;
+                String wind_speed;
+                String cloud;
+                String precipi_amount_min;
+                String precipi_amount_max;
                 try {
                     URL url = new URL("http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58");
                     URLConnection urlConn = null;
@@ -48,32 +51,40 @@ public class MainActivity extends AppCompatActivity {
                     bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
                     String line = bufferedReader.readLine();
                     JSONObject obj = new JSONObject(line);
+
+                    air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                    wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+                    wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
+                    cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
+                    precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
+                    precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+
+                    //TODO: Remove these? They aren't used
+                    String precipi_amount = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
                     String longitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("0");
                     String latitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("1");
-                    String air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
-                    String wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-                    String wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
-                    String cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-                    String precipi_amount = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
-                    String precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-                    String precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
                 } catch (IOException | JSONException e) {
                     throw new RuntimeException(e);
-                }
+                } //End of try statement
+
 
                 //Needs to get value from parser
-                    //Parser is ready! Merging contents ...
-                float windDirection = 0, temperatureValue = 0, windspeedValue = 0,
-                        cloudinessValue = 0, precipitationMinValue = 0, precipitationMaxValue = 0;
-                String direction = "";
+                //Parser is ready! Merging contents ... 💿
 
+                float   windDirection = Float.parseFloat(wind_direction),
+                        temperatureValue = Float.parseFloat(air_temp),
+                        windspeedValue = Float.parseFloat(wind_speed),
+                        cloudinessValue = Float.parseFloat(cloud),
+                        precipitationMinValue = Float.parseFloat(precipi_amount_min),
+                        precipitationMaxValue = Float.parseFloat(precipi_amount_max);
+
+                String direction = "";
                 //Temp for getting wind direction where N = North, E = East, S = South, W = West
-                if (windDirection > 330 || windDirection < 30){
+                if (windDirection > 330 || windDirection < 30) {
                     direction = "N";
-                }
-                else if(windDirection > 30 && windDirection < 60){
+                } else if (windDirection > 30 && windDirection < 60) {
                     direction = "NE";
-                } else if(windDirection > 60 && windDirection < 120) {
+                } else if (windDirection > 60 && windDirection < 120) {
                     direction = "E";
                 } else if (windDirection > 120 && windDirection < 150) {
                     direction = "SE";
