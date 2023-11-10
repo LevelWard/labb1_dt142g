@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         String var = "many words in here, many words.";
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
@@ -54,4 +55,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-// branch of parser
