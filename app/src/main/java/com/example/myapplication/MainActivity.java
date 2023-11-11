@@ -1,11 +1,19 @@
 package com.example.myapplication;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,25 +28,63 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 TextView temperature = findViewById(R.id.Temperature);
                 TextView windspeed = findViewById(R.id.WindSpeed);
                 TextView cloudiness = findViewById(R.id.Cloudiness);
                 TextView precipitation = findViewById(R.id.Precipitation);
-                ImageView currentWeather= findViewById(R.id.current_weather);
+                ImageView currentWeather = findViewById(R.id.current_weather);
 
-                //Temp for getting wind direction where N = North, E = East, S = South, W = West
+
+                //TODO: Make parser into a standalone object with dedicated class members & methods.
+                String wind_direction;
+                String air_temp;
+                String wind_speed;
+                String cloud;
+                String precipi_amount_min;
+                String precipi_amount_max;
+                try {
+                    URL url = new URL("http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58");
+                    URLConnection urlConn = null;
+                    BufferedReader bufferedReader = null;
+                    urlConn = url.openConnection();
+                    bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    String line = bufferedReader.readLine();
+                    JSONObject obj = new JSONObject(line);
+
+                    air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                    wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+                    wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
+                    cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
+                    precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
+                    precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+
+                    //TODO: Remove these? They aren't used
+                    String precipi_amount = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
+                    String longitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("0");
+                    String latitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("1");
+                } catch (IOException | JSONException e) {
+                    throw new RuntimeException(e);
+                } //End of try statement
+
 
                 //Needs to get value from parser
-                float windDirection = 0, temperatureValue = 0, windspeedValue = 0,
-                        cloudinessValue = 0, precipitationMinValue = 0, precipitationMaxValue = 0;
-                String direction = "";
+                //Parser is ready! Merging contents ... 💿
 
-                if (windDirection > 330 || windDirection < 30){
+                float   windDirection = Float.parseFloat(wind_direction),
+                        temperatureValue = Float.parseFloat(air_temp),
+                        windspeedValue = Float.parseFloat(wind_speed),
+                        cloudinessValue = Float.parseFloat(cloud),
+                        precipitationMinValue = Float.parseFloat(precipi_amount_min),
+                        precipitationMaxValue = Float.parseFloat(precipi_amount_max);
+
+                String direction = "";
+                //Temp for getting wind direction where N = North, E = East, S = South, W = West
+                if (windDirection > 330 || windDirection < 30) {
                     direction = "N";
-                }
-                else if(windDirection > 30 && windDirection < 60){
+                } else if (windDirection > 30 && windDirection < 60) {
                     direction = "NE";
-                } else if(windDirection > 60 && windDirection < 120) {
+                } else if (windDirection > 60 && windDirection < 120) {
                     direction = "E";
                 } else if (windDirection > 120 && windDirection < 150) {
                     direction = "SE";
@@ -61,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
             }
         });
+
     }
+
 }
 
