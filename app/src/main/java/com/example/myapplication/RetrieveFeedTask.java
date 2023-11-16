@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.AsyncTask;
+import android.widget.TextView;
 
 import org.json.JSONObject;
 
@@ -9,11 +10,15 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-class RetrieveFeedTask extends AsyncTask<String, Void, Void> {
+class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
 
+    public TextView temperatureButton;
+    public TextView windspeedButton;
+    public TextView cloudinessButton;
+    public TextView precipitationButton;
     private Exception exception;
 
-    protected Void doInBackground(String... urls) {
+    protected WeatherData doInBackground(String... urls) {
         try {
             URL url = new URL(urls[0]);
             URLConnection urlConn = url.openConnection();
@@ -27,6 +32,7 @@ class RetrieveFeedTask extends AsyncTask<String, Void, Void> {
                 line = bufferedReader.readLine();
             }
             JSONObject obj = new JSONObject(add.toString());
+            return new WeatherData(obj);
 
         } catch (Exception e) {
             this.exception = e;
@@ -36,8 +42,14 @@ class RetrieveFeedTask extends AsyncTask<String, Void, Void> {
         return null;
     }
 
-    protected void onPostExecute(Void feed) {
-        // TODO: check this.exception
-        // TODO: do something with the feed
+    protected void onPostExecute(WeatherData data) {
+        //TODO: data gives null values, something is wrong in WeatherData class. Must control JSON
+        //TODO: object calls to ensure correct values.
+        /*temperatureButton.setText(data.air_temp);
+        windspeedButton.setText(data.wind_speed);
+        cloudinessButton.setText(data.cloud);
+        String minMax = data.percipitationMin + " - " + data.percipitationMax;
+        precipitationButton.setText(minMax);*/
+
     }
 }
