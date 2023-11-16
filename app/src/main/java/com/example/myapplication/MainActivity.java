@@ -25,6 +25,39 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.refresh);
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
+                    URLConnection urlConn = null;
+                    BufferedReader bufferedReader = null;
+                    urlConn = url.openConnection();
+                    urlConn.addRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/119.0");
+                    bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    String line = bufferedReader.readLine();
+                    JSONObject obj = new JSONObject(line);
+
+                    //air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                    //wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+                    //wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
+                    //cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
+                    //precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
+                    //precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+
+                    //TODO: Remove these? They aren't used
+                    String precipi_amount = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
+                    String longitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("0");
+                    String latitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("1");
+                } catch (Exception e) {
+                    //throw new RuntimeException(e);
+                }
+
+            }
+        });
+
+        thread.start();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,35 +70,14 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //TODO: Make parser into a standalone object with dedicated class members & methods.
-                String wind_direction;
-                String air_temp;
-                String wind_speed;
-                String cloud;
-                String precipi_amount_min;
-                String precipi_amount_max;
-                try {
-                    URL url = new URL("http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58");
-                    URLConnection urlConn = null;
-                    BufferedReader bufferedReader = null;
-                    urlConn = url.openConnection();
-                    bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-                    String line = bufferedReader.readLine();
-                    JSONObject obj = new JSONObject(line);
+                String wind_direction = null;
+                String air_temp = null;
+                String wind_speed = null;
+                String cloud = null;
+                String precipi_amount_min = null;
+                String precipi_amount_max = null;
 
-                    air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
-                    wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-                    wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
-                    cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-                    precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-                    precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
 
-                    //TODO: Remove these? They aren't used
-                    String precipi_amount = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
-                    String longitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("0");
-                    String latitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("1");
-                } catch (IOException | JSONException e) {
-                    throw new RuntimeException(e);
-                } //End of try statement
 
 
                 //Needs to get value from parser
@@ -111,4 +123,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
