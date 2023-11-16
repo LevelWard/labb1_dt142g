@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -38,17 +40,21 @@ public class MainActivity extends AppCompatActivity {
                     String line = bufferedReader.readLine();
                     JSONObject obj = new JSONObject(line);
 
-                    //air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
-                    //wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-                    //wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
-                    //cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-                    //precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-                    //precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+                    /*air_temp =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                    /*wind_speed =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+                    /*wind_direction =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
+                    /*cloud =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
+                    /*precipi_amount_min =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
+                    /*precipi_amount_max =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
 
                     //TODO: Remove these? They aren't used
-                    String precipi_amount = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
-                    String longitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("0");
-                    String latitude = obj.getJSONObject("geometry").getJSONObject("coordinates").getString("1");
+                    /*String precipi_amount =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
+
+
+                    /*JSONArray arr =*/ obj.getJSONObject("geometry").getJSONArray("coordinates"); // always throws exception
+                    /*String latitude = index 0  in arr*/
+                    /*String longitude = index 1 in arr*/
+
                 } catch (Exception e) {
                     //throw new RuntimeException(e);
                 }
