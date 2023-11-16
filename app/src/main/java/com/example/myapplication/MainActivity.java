@@ -43,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 String cloud;
                 String precipi_amount_min;
                 String precipi_amount_max;
-                try {
+
+                new RetrieveFeedTask().execute("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
+
+                /*try {
                     URL url = new URL("http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58");
                     URLConnection urlConn = null;
                     BufferedReader bufferedReader = null;
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 cloudiness.setText("Cloudiness: " + cloudinessValue);
                 precipitation.setText("Precipitation: Between " + precipitationMinValue +
                         " and " + precipitationMaxValue);
-                currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
+                currentWeather.setImageResource(R.drawable.ic_launcher_foreground);*/
             }
         });
 
