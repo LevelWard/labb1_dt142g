@@ -19,7 +19,6 @@ import java.net.URLConnection;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView precipitation = findViewById(R.id.Precipitation);
                 ImageView currentWeather = findViewById(R.id.current_weather);
                 try {
-                    URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
+                    URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39088;lon=17.28709");
                     URLConnection urlConn = null;
                     BufferedReader bufferedReader = null;
                     urlConn = url.openConnection();
@@ -44,33 +43,26 @@ public class MainActivity extends AppCompatActivity {
                     String line = bufferedReader.readLine();
                     JSONObject obj = new JSONObject(line);
 
-                    //TODO: Change the path to the vaalues of the required data, the current pah is to other sorts of data
-                    JSONObject air_temp = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data");
-                    String wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-                    String wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
-                    String cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-                    String precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-                    String precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+                    String air_temp = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("air_temperature");
+                    String wind_speed = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("wind_speed");
+                    String wind_direction = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("wind_from_direction");
+                    String cloud = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("cloud_area_fraction");
+                    String precipi_amount_min = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("next_1_hours").getJSONObject("details").getString("precipitation_amount_min");
+                    String precipi_amount_max = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("next_1_hours").getJSONObject("details").getString("precipitation_amount_max");
 
                     //TODO: Remove these? They aren't used
                     JSONObject test = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(1);
                     /*String precipi_amount =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
                     /*JSONArray arr =*/ obj.getJSONObject("geometry").getJSONArray("coordinates"); // always throws exception
-                    //TODO: replace the test parser with this one
-                            /*
+
                             Float   windDirection = Float.parseFloat(wind_direction),
                                     temperatureValue = Float.parseFloat(air_temp),
                                     windspeedValue = Float.parseFloat(wind_speed),
                                     cloudinessValue = Float.parseFloat(cloud),
                                     precipitationMinValue = Float.parseFloat(precipi_amount_min),
                                     precipitationMaxValue = Float.parseFloat(precipi_amount_max);
-                            */
-                    Float   windDirection = Float.parseFloat("1.2"),
-                            temperatureValue = Float.parseFloat("1.2"),
-                            windspeedValue = Float.parseFloat("1.2"),
-                            cloudinessValue = Float.parseFloat("1.2"),
-                            precipitationMinValue = Float.parseFloat("1.2"),
-                            precipitationMaxValue = Float.parseFloat("1.2");
+
+
                     String direction = "";
                     //Temp for getting wind direction where N = North, E = East, S = South, W = West
                     if (windDirection > 330 || windDirection < 30) {
@@ -91,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                         direction = "NW";
                     }
 
-
                     temperature.setText("Temperature: " + temperatureValue);
                     windspeed.setText("WindSpeed: " + windspeedValue);
                     cloudiness.setText("Cloudiness: " + cloudinessValue);
@@ -99,13 +90,12 @@ public class MainActivity extends AppCompatActivity {
                             " and " + precipitationMaxValue);
                     currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
                 } catch (Exception e) {
-                    //throw new RuntimeException(e);
+
                 }
             }
         });
+
         thread.start();
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         TextView precipitation = findViewById(R.id.Precipitation);
                         ImageView currentWeather = findViewById(R.id.current_weather);
                         try {
-                            URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
+                            URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39088;lon=17.28709");
                             URLConnection urlConn = null;
                             BufferedReader bufferedReader = null;
                             urlConn = url.openConnection();
@@ -128,34 +118,26 @@ public class MainActivity extends AppCompatActivity {
                             String line = bufferedReader.readLine();
                             JSONObject obj = new JSONObject(line);
 
-                            //TODO: Change the path to the vaalues of the required data, the current pah is to other sorts of data
-                            String air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
-                            String wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-                            String wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
-                            String cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-                            String precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-                            String precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+                            String air_temp = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("air_temperature");
+                            String wind_speed = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("wind_speed");
+                            String wind_direction = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("wind_from_direction");
+                            String cloud = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("cloud_area_fraction");
+                            String precipi_amount_min = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("next_1_hours").getJSONObject("details").getString("precipitation_amount_min");
+                            String precipi_amount_max = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("next_1_hours").getJSONObject("details").getString("precipitation_amount_max");
 
                             //TODO: Remove these? They aren't used
                             JSONObject test = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(1);
                             /*String precipi_amount =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
                             /*JSONArray arr =*/ obj.getJSONObject("geometry").getJSONArray("coordinates"); // always throws exception
 
-                            //TODO: replace the test parser with this one
-                            /*
                             Float   windDirection = Float.parseFloat(wind_direction),
                                     temperatureValue = Float.parseFloat(air_temp),
                                     windspeedValue = Float.parseFloat(wind_speed),
                                     cloudinessValue = Float.parseFloat(cloud),
                                     precipitationMinValue = Float.parseFloat(precipi_amount_min),
                                     precipitationMaxValue = Float.parseFloat(precipi_amount_max);
-                            */
-                            Float   windDirection = Float.parseFloat("1.1"),
-                                    temperatureValue = Float.parseFloat("1.1"),
-                                    windspeedValue = Float.parseFloat("1.1"),
-                                    cloudinessValue = Float.parseFloat("1.1"),
-                                    precipitationMinValue = Float.parseFloat("1.1"),
-                                    precipitationMaxValue = Float.parseFloat("1.1");
+
+
                             String direction = "";
                             //Temp for getting wind direction where N = North, E = East, S = South, W = West
                             if (windDirection > 330 || windDirection < 30) {
@@ -176,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                                 direction = "NW";
                             }
 
-
                             temperature.setText("Temperature: " + temperatureValue);
                             windspeed.setText("WindSpeed: " + windspeedValue);
                             cloudiness.setText("Cloudiness: " + cloudinessValue);
@@ -184,14 +165,12 @@ public class MainActivity extends AppCompatActivity {
                                     " and " + precipitationMaxValue);
                             currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
                         } catch (Exception e) {
-                            //throw new RuntimeException(e);
+
                         }
                     }
                 });
                 thread.start();
             }
         });
-
     }
-
 }
