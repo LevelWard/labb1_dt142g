@@ -26,10 +26,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button button = (Button) findViewById(R.id.refresh);
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                TextView temperature = findViewById(R.id.Temperature);
+                TextView windspeed = findViewById(R.id.WindSpeed);
+                TextView cloudiness = findViewById(R.id.Cloudiness);
+                TextView precipitation = findViewById(R.id.Precipitation);
+                ImageView currentWeather = findViewById(R.id.current_weather);
                 try {
                     URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
                     URLConnection urlConn = null;
@@ -40,89 +44,151 @@ public class MainActivity extends AppCompatActivity {
                     String line = bufferedReader.readLine();
                     JSONObject obj = new JSONObject(line);
 
-                    /*air_temp =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
-                    /*wind_speed =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-                    /*wind_direction =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
-                    /*cloud =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-                    /*precipi_amount_min =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-                    /*precipi_amount_max =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+                    //TODO: Change the path to the vaalues of the required data, the current pah is to other sorts of data
+                    String air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                    String wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+                    String wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
+                    String cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
+                    String precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
+                    String precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
 
                     //TODO: Remove these? They aren't used
+                    JSONObject test = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(1);
                     /*String precipi_amount =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
-
-
                     /*JSONArray arr =*/ obj.getJSONObject("geometry").getJSONArray("coordinates"); // always throws exception
-                    /*String latitude = index 0  in arr*/
-                    /*String longitude = index 1 in arr*/
+                    //TODO: replace the test parser with this one
+                            /*
+                            Float   windDirection = Float.parseFloat(wind_direction),
+                                    temperatureValue = Float.parseFloat(air_temp),
+                                    windspeedValue = Float.parseFloat(wind_speed),
+                                    cloudinessValue = Float.parseFloat(cloud),
+                                    precipitationMinValue = Float.parseFloat(precipi_amount_min),
+                                    precipitationMaxValue = Float.parseFloat(precipi_amount_max);
+                            */
+                    Float   windDirection = Float.parseFloat("1.2"),
+                            temperatureValue = Float.parseFloat("1.2"),
+                            windspeedValue = Float.parseFloat("1.2"),
+                            cloudinessValue = Float.parseFloat("1.2"),
+                            precipitationMinValue = Float.parseFloat("1.2"),
+                            precipitationMaxValue = Float.parseFloat("1.2");
+                    String direction = "";
+                    //Temp for getting wind direction where N = North, E = East, S = South, W = West
+                    if (windDirection > 330 || windDirection < 30) {
+                        direction = "N";
+                    } else if (windDirection > 30 && windDirection < 60) {
+                        direction = "NE";
+                    } else if (windDirection > 60 && windDirection < 120) {
+                        direction = "E";
+                    } else if (windDirection > 120 && windDirection < 150) {
+                        direction = "SE";
+                    } else if (windDirection > 150 && windDirection < 210) {
+                        direction = "S";
+                    } else if (windDirection > 210 && windDirection < 240) {
+                        direction = "SW";
+                    } else if (windDirection > 240 && windDirection < 300) {
+                        direction = "W";
+                    } else if (windDirection > 300 && windDirection < 330) {
+                        direction = "NW";
+                    }
 
+
+                    temperature.setText("Temperature: " + temperatureValue);
+                    windspeed.setText("WindSpeed: " + windspeedValue);
+                    cloudiness.setText("Cloudiness: " + cloudinessValue);
+                    precipitation.setText("Precipitation: Between " + precipitationMinValue +
+                            " and " + precipitationMaxValue);
+                    currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
                 } catch (Exception e) {
                     //throw new RuntimeException(e);
                 }
-
             }
         });
-
         thread.start();
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                TextView temperature = findViewById(R.id.Temperature);
-                TextView windspeed = findViewById(R.id.WindSpeed);
-                TextView cloudiness = findViewById(R.id.Cloudiness);
-                TextView precipitation = findViewById(R.id.Precipitation);
-                ImageView currentWeather = findViewById(R.id.current_weather);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView temperature = findViewById(R.id.Temperature);
+                        TextView windspeed = findViewById(R.id.WindSpeed);
+                        TextView cloudiness = findViewById(R.id.Cloudiness);
+                        TextView precipitation = findViewById(R.id.Precipitation);
+                        ImageView currentWeather = findViewById(R.id.current_weather);
+                        try {
+                            URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
+                            URLConnection urlConn = null;
+                            BufferedReader bufferedReader = null;
+                            urlConn = url.openConnection();
+                            urlConn.addRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/119.0");
+                            bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                            String line = bufferedReader.readLine();
+                            JSONObject obj = new JSONObject(line);
+
+                            //TODO: Change the path to the vaalues of the required data, the current pah is to other sorts of data
+                            String air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                            String wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+                            String wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
+                            String cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
+                            String precipi_amount_min = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
+                            String precipi_amount_max = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+
+                            //TODO: Remove these? They aren't used
+                            JSONObject test = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(1);
+                            /*String precipi_amount =*/ obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount");
+                            /*JSONArray arr =*/ obj.getJSONObject("geometry").getJSONArray("coordinates"); // always throws exception
+
+                            //TODO: replace the test parser with this one
+                            /*
+                            Float   windDirection = Float.parseFloat(wind_direction),
+                                    temperatureValue = Float.parseFloat(air_temp),
+                                    windspeedValue = Float.parseFloat(wind_speed),
+                                    cloudinessValue = Float.parseFloat(cloud),
+                                    precipitationMinValue = Float.parseFloat(precipi_amount_min),
+                                    precipitationMaxValue = Float.parseFloat(precipi_amount_max);
+                            */
+                            Float   windDirection = Float.parseFloat("1.1"),
+                                    temperatureValue = Float.parseFloat("1.1"),
+                                    windspeedValue = Float.parseFloat("1.1"),
+                                    cloudinessValue = Float.parseFloat("1.1"),
+                                    precipitationMinValue = Float.parseFloat("1.1"),
+                                    precipitationMaxValue = Float.parseFloat("1.1");
+                            String direction = "";
+                            //Temp for getting wind direction where N = North, E = East, S = South, W = West
+                            if (windDirection > 330 || windDirection < 30) {
+                                direction = "N";
+                            } else if (windDirection > 30 && windDirection < 60) {
+                                direction = "NE";
+                            } else if (windDirection > 60 && windDirection < 120) {
+                                direction = "E";
+                            } else if (windDirection > 120 && windDirection < 150) {
+                                direction = "SE";
+                            } else if (windDirection > 150 && windDirection < 210) {
+                                direction = "S";
+                            } else if (windDirection > 210 && windDirection < 240) {
+                                direction = "SW";
+                            } else if (windDirection > 240 && windDirection < 300) {
+                                direction = "W";
+                            } else if (windDirection > 300 && windDirection < 330) {
+                                direction = "NW";
+                            }
 
 
-                //TODO: Make parser into a standalone object with dedicated class members & methods.
-                String wind_direction = null;
-                String air_temp = null;
-                String wind_speed = null;
-                String cloud = null;
-                String precipi_amount_min = null;
-                String precipi_amount_max = null;
-
-
-
-
-                //Needs to get value from parser
-                //Parser is ready! Merging contents ... 💿
-
-                float   windDirection = Float.parseFloat(wind_direction),
-                        temperatureValue = Float.parseFloat(air_temp),
-                        windspeedValue = Float.parseFloat(wind_speed),
-                        cloudinessValue = Float.parseFloat(cloud),
-                        precipitationMinValue = Float.parseFloat(precipi_amount_min),
-                        precipitationMaxValue = Float.parseFloat(precipi_amount_max);
-
-                String direction = "";
-                //Temp for getting wind direction where N = North, E = East, S = South, W = West
-                if (windDirection > 330 || windDirection < 30) {
-                    direction = "N";
-                } else if (windDirection > 30 && windDirection < 60) {
-                    direction = "NE";
-                } else if (windDirection > 60 && windDirection < 120) {
-                    direction = "E";
-                } else if (windDirection > 120 && windDirection < 150) {
-                    direction = "SE";
-                } else if (windDirection > 150 && windDirection < 210) {
-                    direction = "S";
-                } else if (windDirection > 210 && windDirection < 240) {
-                    direction = "SW";
-                } else if (windDirection > 240 && windDirection < 300) {
-                    direction = "W";
-                } else if (windDirection > 300 && windDirection < 330) {
-                    direction = "NW";
-                }
-
-
-                temperature.setText("Temperature: " + temperatureValue);
-                windspeed.setText("WindSpeed: " + windspeedValue);
-                cloudiness.setText("Cloudiness: " + cloudinessValue);
-                precipitation.setText("Precipitation: Between " + precipitationMinValue +
-                        " and " + precipitationMaxValue);
-                currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
+                            temperature.setText("Temperature: " + temperatureValue);
+                            windspeed.setText("WindSpeed: " + windspeedValue);
+                            cloudiness.setText("Cloudiness: " + cloudinessValue);
+                            precipitation.setText("Precipitation: Between " + precipitationMinValue +
+                                    " and " + precipitationMaxValue);
+                            currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
+                        } catch (Exception e) {
+                            //throw new RuntimeException(e);
+                        }
+                    }
+                });
+                thread.start();
             }
         });
 
