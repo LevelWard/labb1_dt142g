@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,13 +17,15 @@ public class WeatherData {
         try {
 
             //TODO: Current grabbing of data below gives incorrect values.
-            air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
-            wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
-            cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
-            percipitationMin = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_min");
-            percipitationMax = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("precipitation_amount_max");
+            //air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+            air_temp = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("air_temperature");
+            //wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
+            wind_speed = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("wind_speed");
+            cloud = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("cloud_area_fraction");
+            percipitationMin = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("next_1_hours").getJSONObject("details").getString("precipitation_amount_min");
+            percipitationMax = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("next_1_hours").getJSONObject("details").getString("precipitation_amount_max");
 
-            float windDirection = Float.parseFloat(obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction"));
+            float windDirection = Float.parseFloat(obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getString("wind_from_direction"));
             //Temp for getting wind direction where N = North, E = East, S = South, W = West
             if (windDirection > 330 || windDirection < 30) {
                 direction = "N";

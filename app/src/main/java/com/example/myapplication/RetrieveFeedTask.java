@@ -45,11 +45,11 @@ class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
     protected void onPostExecute(WeatherData data) {
         //TODO: data gives null values, something is wrong in WeatherData class. Must control JSON
         //TODO: object calls to ensure correct values.
-        /*temperatureButton.setText(data.air_temp);
-        windspeedButton.setText(data.wind_speed);
-        cloudinessButton.setText(data.cloud);
+        temperatureButton.setText("Temperature:" + data.air_temp);
+        windspeedButton.setText("Wind speed:" + data.wind_speed);
+        cloudinessButton.setText("Cloudines:" + data.cloud);
         String minMax = data.percipitationMin + " - " + data.percipitationMax;
-        precipitationButton.setText(minMax);*/
+        precipitationButton.setText(minMax);
 
     }
 }
