@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(line);
 
                     //TODO: Change the path to the vaalues of the required data, the current pah is to other sorts of data
-                    String air_temp = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("air_temperature");
+                    JSONObject air_temp = obj.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data");
                     String wind_speed = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_speed");
                     String wind_direction = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("wind_from_direction");
                     String cloud = obj.getJSONObject("properties").getJSONObject("meta").getJSONObject("units").getString("cloud_area_fraction");
