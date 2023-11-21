@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView precipitation = findViewById(R.id.Precipitation);
                 ImageView currentWeather = findViewById(R.id.current_weather);
                 try {
+
                     URL url = new URL("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39088;lon=17.28709");
                     URLConnection urlConn = null;
                     BufferedReader bufferedReader = null;
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                             cloudiness.setText("Cloudiness: " + cloudinessValue);
                             precipitation.setText("Precipitation: Between " + precipitationMinValue +
                                     " and " + precipitationMaxValue);
-                            currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
+                            currentWeather.setImageResource(R.drawable.heavyrain);
                         } catch (Exception e) {
 
                         }
