@@ -84,15 +84,31 @@ public class MainActivity extends AppCompatActivity {
                         direction = "NW";
                     }
 
+                    String Extraced_from_JSON = "something_else";
+
                     temperature.setText("Temperature: " + temperatureValue);
                     windspeed.setText("WindSpeed: " + windspeedValue);
                     cloudiness.setText("Cloudiness: " + cloudinessValue);
                     precipitation.setText("Precipitation: Between " + precipitationMinValue +
                             " and " + precipitationMaxValue);
-                    currentWeather.setImageResource(R.drawable.ic_launcher_foreground);
+                    currentWeather.setImageResource(get_image_id(Extraced_from_JSON));
+
                 } catch (Exception e) {
 
                 }
+            }
+            //A method of this thread class
+            int get_image_id(String Weather_state_from_json){
+
+                if (Weather_state_from_json == "something"){
+                    return R.drawable.heavyrain;
+                } else if (Weather_state_from_json == "something_else") {
+                    return R.drawable.snow;
+                }
+                // MORE ...
+
+                //default
+                else return R.drawable.rain;
             }
         });
 
@@ -159,15 +175,32 @@ public class MainActivity extends AppCompatActivity {
                                 direction = "NW";
                             }
 
+                            String Extraced_from_JSON = "something_else";
+
                             temperature.setText("Temperature: " + temperatureValue);
                             windspeed.setText("WindSpeed: " + windspeedValue);
                             cloudiness.setText("Cloudiness: " + cloudinessValue);
                             precipitation.setText("Precipitation: Between " + precipitationMinValue +
                                     " and " + precipitationMaxValue);
-                            currentWeather.setImageResource(R.drawable.heavyrain);
+
+                            currentWeather.setImageResource(get_image_id(Extraced_from_JSON));
                         } catch (Exception e) {
 
                         }
+                    }
+
+                    //A method of this thread class
+                    int get_image_id(String Weather_state_from_json){
+
+                        if (Weather_state_from_json == "something"){
+                            return R.drawable.heavyrain;
+                        } else if (Weather_state_from_json == "something_else") {
+                            return R.drawable.snow;
+                        }
+                        // MORE ...
+
+                        //default
+                        else return R.drawable.rain;
                     }
                 });
                 thread.start();
