@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.AsyncTask;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -17,6 +18,8 @@ class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
     public TextView cloudinessButton;
     public TextView precipitationButton;
     private Exception exception;
+
+    public ImageView currentWeatherButton;
 
     protected WeatherData doInBackground(String... urls) {
         try {
@@ -45,11 +48,27 @@ class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
     protected void onPostExecute(WeatherData data) {
         //TODO: data gives null values, something is wrong in WeatherData class. Must control JSON
         //TODO: object calls to ensure correct values.
-        temperatureButton.setText("Temperature:" + data.air_temp + " celsius");
-        windspeedButton.setText("Wind speed:" + data.wind_speed + " mps");
-        cloudinessButton.setText("Cloudiness:" + data.cloud + " %");
-        String minMax = "Precipitation: " + "Between " + data.percipitationMin + " mm " + " and " + data.percipitationMax + " mm";
-        precipitationButton.setText(minMax);
+
+
+            temperatureButton.setText("Temperature: " + data.air_temp + " celsius");
+            windspeedButton.setText("Wind speed: " + data.wind_speed + " mps" + ", toward " + data.direction);
+            cloudinessButton.setText("Cloudiness: " + data.cloud + " %");
+            String minMax = "Precipitation: " + "Between " + data.percipitationMin + " mm " + " and " + data.percipitationMax + " mm";
+            precipitationButton.setText(minMax);
+
+            //int drawableResourceId = getDrawableForWeather(data.currentWeather);
+            //currentWeatherButton.setImageResource(drawableResourceId);
 
     }
+
+    /*private int getDrawableForWeather(String WeatherCondition) {
+        switch (WeatherCondition){
+            case "clearsky_day":
+                return R.drawable.clearsky_day;
+            default:
+                return R.drawable.snowshowersandthunder_day;
+        }
+    }*/
+
+
 }
