@@ -52,13 +52,13 @@ class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
         //TODO: object calls to ensure correct values.
 
 
-            temperatureButton.setText("Temperature:  " + data.air_temp + " celsius");
-            windspeedButton.setText("Wind speed:  " + data.wind_speed + "  mps" + ", toward  " + data.direction);
-            cloudinessButton.setText("Cloudiness:  " + data.cloud + " %");
-            String minMax = "Precipitation: " + " Between " + data.percipitationMin + " mm " + " and " + data.percipitationMax + " mm";
-            precipitationButton.setText(minMax);
+        temperatureButton.setText("Temperature:  " + data.air_temp + " celsius");
+        windspeedButton.setText("Wind speed:  " + data.wind_speed + "  mps" + ", toward  " + data.direction);
+        cloudinessButton.setText("Cloudiness:  " + data.cloud + " %");
+        String minMax = "Precipitation: " + " Between " + data.percipitationMin + " mm " + " and " + data.percipitationMax + " mm";
+        precipitationButton.setText(minMax);
 
-            currentWeatherButton.setImageResource(data.currentWeather);
+        currentWeatherButton.setImageResource(data.currentWeather);
 
 
 
