@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,25 +52,16 @@ class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
         //TODO: object calls to ensure correct values.
 
             // visa temperator
-            temperatureButton.setText("Temperature: " + data.air_temp + " celsius");
-            windspeedButton.setText("Wind speed: " + data.wind_speed + " mps" + ", toward " + data.direction);
-            cloudinessButton.setText("Cloudiness: " + data.cloud + " %");
-            String minMax = "Precipitation: " + "Between " + data.percipitationMin + " mm " + " and " + data.percipitationMax + " mm";
+            temperatureButton.setText("Temperature:  " + data.air_temp + " celsius");
+            windspeedButton.setText("Wind speed:  " + data.wind_speed + "  mps" + ", toward  " + data.direction);
+            cloudinessButton.setText("Cloudiness:  " + data.cloud + " %");
+            String minMax = "Precipitation: " + " Between " + data.percipitationMin + " mm " + " and " + data.percipitationMax + " mm";
             precipitationButton.setText(minMax);
 
-            //int drawableResourceId = getDrawableForWeather(data.currentWeather);
-            //currentWeatherButton.setImageResource(drawableResourceId);
+            currentWeatherButton.setImageResource(data.currentWeather);
+
+
+
 
     }
-
-    /*private int getDrawableForWeather(String WeatherCondition) {
-        switch (WeatherCondition){
-            case "clearsky_day":
-                return R.drawable.clearsky_day;
-            default:
-                return R.drawable.snowshowersandthunder_day;
-        }
-    }*/
-
-
 }

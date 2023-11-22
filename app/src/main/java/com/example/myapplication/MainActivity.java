@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 rft.precipitationButton = precipitation;
                 rft.cloudinessButton = cloudiness;
                 rft.windspeedButton = windspeed;
+                rft.currentWeatherButton= currentWeather;
                 //TODO: Add current weather button. Exists in WeatherData object but not given value
                 rft.execute("https://api.met.no/weatherapi/locationforecast/2.0/?lat=63.39;lon=17.28");
 
