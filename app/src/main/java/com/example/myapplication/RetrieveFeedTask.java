@@ -49,7 +49,7 @@ class RetrieveFeedTask extends AsyncTask<String, Void, WeatherData> {
         //TODO: data gives null values, something is wrong in WeatherData class. Must control JSON
         //TODO: object calls to ensure correct values.
 
-
+            // visa temperator
             temperatureButton.setText("Temperature: " + data.air_temp + " celsius");
             windspeedButton.setText("Wind speed: " + data.wind_speed + " mps" + ", toward " + data.direction);
             cloudinessButton.setText("Cloudiness: " + data.cloud + " %");
